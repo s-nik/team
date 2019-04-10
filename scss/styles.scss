@@ -18,7 +18,13 @@
 	flex-direction: $direction;
 	flex-wrap: $wrap;
 	align-items: $align;
-	justify-content: $content;
+	justify-content: $cont`ent;
+}
+
+@mixin align($mh:3em) {
+		text-align: center;
+		max-height: $mh;
+		overflow: hidden;
 }
 
 //fonts
@@ -33,7 +39,6 @@ $light-color: #898f8f;
 $title-color: #4f5560;
 
 * {
-	// outline: 1px solid red;
 	box-sizing: border-box;
 }
 
@@ -70,7 +75,6 @@ body {
 			width: 40%;
 			@include pos-a(100%, 50%, -50%, -100%);
 		}
-
 		&:after {
 			display: inline-block;
 			content:'';
@@ -96,25 +100,22 @@ body {
 		line-height: 1.2;
 	}
 }
-
-
 .section__content {
 	margin: 0 auto;
 	@include flex($content:space-between);
 }
-
 .slider {
-	// outline: 1px solid red;
 	position: relative;
 	&__arrow {
+		@include tr;
 		position: absolute;
 		top: 0;
 		bottom: 0;
 		width:70px;
-		// background-color: rgba(255, 0, 0, .5);
 		background-image: url('../img/arrow.png');
 		background-repeat: no-repeat;
 		background-position: center;
+		z-index: 2;
 		&--left {
 			left: 0;
 		}
@@ -122,12 +123,15 @@ body {
 			transform: rotate(180deg);
 			right: 0;
 		}
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: rgba(150, 150, 150, .2);
+		}
 	}
 	&__content {
-
 	}
 	&__item {
-		height: 600px;
 	}
 	&__dots {
 		position: absolute;
@@ -137,41 +141,35 @@ body {
 		text-align: center;
 	}
 	&__dot {
+		background-color: $primary-color;
 		border: 1px solid $primary-color;
 		display: inline-block;
 		width: 12px;
 		height: 12px;
 		border-radius: 50%;
 		margin: 0 2px;
-
-		&::hover,
-		&::focus, 
-		&::active {
-			background-color: $primary-color;
-			// opacity: .5;
+		&--active {
+			background-color: #fff;
+		}
+		&:hover,
+		&:focus, 
+		&:active {
+			background-color: #fff;
 		}
 	}
 }
 
 .profile {
-	display: flex;
-	align-items: stretch;
-	flex-direction: row;
-	height: 600px;
+	@include flex($align:stretch);
 	&__photo,
 	&__info {
 		flex-basis: 50%;
 		padding: 70px;
-		display: flex;
-		align-items: center;
-	}
-	&__photo {
-		display: flex;
+		@include flex;
 		align-items: center;
 	}
 	&__info {
 		flex-direction: column;
-		justify-content: space-around;
 	}
 }
 
@@ -202,12 +200,12 @@ min-width: 70%;
 		height: 75%;
 	}
 	&__img {
+		object-fit: fill;
 		border: 1px solid $primary-color;
 		position: relative;
 		z-index: 2;
-		// min-width: 250px;
-		// max-width: 500px;
 		width: 100%;
+		margin: 0 auto;
 	}
 }
 
@@ -229,12 +227,9 @@ min-width: 70%;
 		color: $title-color;
 		font-size: 3.6rem;
 		line-height: 1;
-
-		text-align: center;
-		max-height: 2.5em;
-		overflow: hidden;
-
+		@include align;
 		margin: 0;
+		margin-top: 3rem;
 		padding-bottom: 3rem;
 		&::after {
 			content:"";
@@ -250,16 +245,12 @@ min-width: 70%;
 		color: $text-color;
 		font-weight: normal;
 		margin: 3rem 0;
-
-		text-align: center;
-		max-height: 3em;
-		overflow: hidden;
+		@include align;
 	}
 	&__social {
 		display: inline-block;
-		width: 35%;
 		margin: 3rem auto;
-		@include flex($wrap:wrap, $content:space-between);
+		@include flex;
 	}
 	&__link {
 		display: inline-block;
@@ -271,24 +262,23 @@ min-width: 70%;
 		font-size: 18px;
 		line-height: 30px;
 		color: $light-color;
-		text-align: center;
 		vertical-align: middle;
 		padding: 0;
 		margin-bottom: 1rem;
-		&::hover,
-		&::focus,
-		&::active {
-			filter: invert(50);
+		outline: none;
+		margin: 0 5px;
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: $primary-color;
+			@include tr;
 		}
 	}
 	&__text {
 		position: relative;
 		padding-bottom: 2.5rem;
 		margin-bottom: 2.5rem;
-
-		text-align: center;
-		max-height: 14em;
-		overflow: hidden;
+		@include align($mh:35em);
 		&::after {
 			content:"";
 			@include pos-a(100%, 50%, -50%, -100%);
@@ -299,11 +289,24 @@ min-width: 70%;
 		}
 	}
 	&__btn {
+		@include tr;
 		display: inline-block;
 		margin: 0 auto;
 		padding: 2px 10px;
 		border: 1px solid $primary-color;
 		text-transform: uppercase;
 		font-family: $btn-font;
+		&:hover {
+			background-color: $primary-color;
+			color: $light-color;
+		}
+	}
+}
+
+@media screen and (max-width: 900px) {
+
+	.profile__photo,
+	.profile__info {
+	padding: 50px;
 	}
 }
