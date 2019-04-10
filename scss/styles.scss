@@ -185,7 +185,8 @@ border: 1px solid $primary-color;
 padding: 10px;
 position: relative;
 min-width: 70%;
-	&::before {
+	&::before,
+	&::after {
 		@include pos-a();
 		content: "";
 		background-color: #fff;
@@ -193,11 +194,7 @@ min-width: 70%;
 		height: 103%;
 	}
 	&::after {
-		@include pos-a();
-		content: "";
-		background-color: #fff;
-		width: 102%;
-		height: 75%;
+		transform:rotate(90deg);
 	}
 	&__img {
 		object-fit: fill;
